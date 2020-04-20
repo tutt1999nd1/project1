@@ -15,6 +15,7 @@ public class BookDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
     public void insertBatch(final List<Book> books){
+        int a;
 
         jdbcTemplate.batchUpdate("INSERT INTO book2 (id,name,code) VALUES (?, ?,?)",
                 new BatchPreparedStatementSetter() {
