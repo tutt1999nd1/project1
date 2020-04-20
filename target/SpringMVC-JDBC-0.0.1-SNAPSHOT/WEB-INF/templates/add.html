@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.springframework.org/schema/data/jaxb"
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>My first BootstrapVue app</title>
+    <style>
+        .form {
+            margin-top: 40px;
+
+            margin-left: 250px;
+            margin-right: 250px;
+
+            border: 1px solid #80808000;
+            align-content: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 14px 0px grey;
+            background-color: #6c7ae0;
+        }
+        .label{
+            color:white;
+        }
+
+    </style>
+    <!-- Required Stylesheets -->
+    <link
+            type="text/css"
+            rel="stylesheet"
+            href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+            type="text/css"
+            rel="stylesheet"
+            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/edit.css}">
+
+</head>
+<body>
+
+    <div class="form" id="form">
+        <div class="form-group">
+            <label style="color:white" for="6">Tên sách</label>
+            <input  class="form-control" id="6"  v-model="book.name">
+        </div>
+
+        <div class="form-group">
+            <label style="color:white"  for="exampleFormControlInput1">Code</label>
+            <input  class="form-control" id="exampleFormControlInput1" v-model="book.code">
+        </div>
+
+
+        <div class="form-group">
+            <label style="color:white" for="1">Id</label>
+            <input  class="form-control" id="exampleFormControlInput1" v-model="book.id">
+        </div>
+
+
+<br>
+        <button v-on:click="post()"  class="btn btn-success">Submit</button>
+
+
+    </div>
+    </div>
+
+
+<script>
+var m=  new Vue({
+    el:"#form",
+    data:{
+      idauthor:null,
+      category:[],
+      categoryall:[],
+      book:{
+        name:null,
+        code:null,
+        id:null
+      }
+    },
+    mounted: function() {
+        this.getAllcategory()
+    },
+    methods: {
+      async post() {
+
+
+        var api='http://localhost:8080/SpringMVC_JDBC_war/add';
+        let response = await fetch(api, {
+          method: 'Post',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(this.book)
+        });
+        alert("Success");
+      },
+      async getAllcategory() {
+
+        var response = await fetch('http://localhost:8080/categoryall');
+        this.categoryall = await response.json();
+      }
+    }
+});
+
+</script>
+</body>
+</html>
